@@ -1,0 +1,53 @@
+import unittest
+from task7 import app, storage
+
+
+class TestApp(unittest.TestCase):
+    def setUp(self):
+        app.config['TESTING'] = True
+        app.config['DEBUG'] = False
+        self.app = app.test_client()
+
+        storage['2022.01.01'] = 400
+        storage['2022.01.02'] = 200
+        storage['2022.02.04'] = 50
+        storage['2022.03.01'] = 150
+        storage['2023.05.10'] = 200
+        storage['2023.10.10'] = 300
+
+    def test_add_50(self):
+        response = self.app.get('/add/20220302/50')
+        self.assertEqual(response.data.decode(), '2022.03.02 потрачено 50 рублей')
+        self.assertEqual(storage['2022.03.02'], 50)
+
+    def test_add_1000(self):
+        response = self.app.get('/add/20230302/1000')
+        self.assertEqual(response.data.decode(), '2023.03.02 потрачено 1000 рублей')
+        self.assertEqual(storage['2023.03.02'], 1000)
+
+    def test_calculate_year_2022(self):
+        response = self.app.get('/calculate/2022')
+        self.assertEqual(response.data.decode(), 'Всего потрачено в 2022 году: 800 рублей')
+
+    def test_calculate_year_2023(self):
+        response = self.app.get('/calculate/2023')
+        self.assertEqual(response.data.decode(), 'Всего потрачено в 2023 году: 500 рублей')
+
+    def test_calculate_month_2022_02(self):
+        response = self.app.get('/calculate/2022/02')
+        self.assertEqual(response.data.decode(), '2022.02 всего потрачено 50 рублей')
+
+    def test_calculate_month_2023_10(self):
+        response = self.app.get('/calculate/2023/10')
+        self.assertEqual(response.data.decode(), '2023.10 всего потрачено 300 рублей')
+
+    def test_add_invalid_input(self):
+        response = self.app.get('/add/202203066/50')
+        self.assertEqual(response.status_code, 404)
+
+    def test_calculate_empty_storage(self):
+        storage.clear()
+        response = self.app.get('/calculate/2022')
+        self.assertEqual(response.data.decode(), 'Всего потрачено в 2022 году: 0 рублей')
+        response = self.app.get('/calculate/2022/02')
+        self.assertEqual(response.data.decode(), '2022.02 всего потрачено 0 рублей')
