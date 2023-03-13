@@ -1,0 +1,33 @@
+import unittest
+import datetime
+from task4 import Person
+
+
+class TestPerson(unittest.TestCase):
+
+    def setUp(self):
+        self.person = Person("Андрей", 1990)
+
+    def test_get_age(self):
+        expected_age = datetime.datetime.now().year - 1990
+        self.assertEqual(self.person.get_age(), expected_age)
+
+    def test_get_name(self):
+        self.assertEqual(self.person.get_name(), "Андрей")
+
+    def test_set_name(self):
+        self.person.set_name("Саша")
+        self.assertEqual(self.person.get_name(), "Саша")
+
+    def test_set_address(self):
+        self.person.set_address("Улица Ленина 3")
+        self.assertEqual(self.person.get_address(), "Улица Ленина 3")
+
+    def test_get_address(self):
+        self.person.set_address("Улица Мира 32")
+        self.assertEqual(self.person.get_address(), "Улица Мира 32")
+
+    def test_is_homeless(self):
+        self.assertTrue(self.person.is_homeless())
+        self.person.set_address("Улица Мира 19")
+        self.assertFalse(self.person.is_homeless())
