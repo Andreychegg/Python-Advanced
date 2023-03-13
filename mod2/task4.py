@@ -4,7 +4,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 
-@app.route('/hello_world/<string:name>')
+@app.route('/hello-world/<string:name>')
 def hello_name(name):
     global weekdays_tuple
     weekday = datetime.today().weekday()
