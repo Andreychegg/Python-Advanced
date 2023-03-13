@@ -7,6 +7,7 @@ storage = {}
 
 @app.route('/add/<date>/<int:number>')
 def add(date, number):
+    response_code = 200 if len(date) == 8 else 404
     year, month, day = date[:4], date[4:6], date[6:]
     storage.setdefault(f'{year}.{month}.{day}', 0)
     storage[f'{year}.{month}.{day}'] += number
