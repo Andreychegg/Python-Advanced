@@ -11,7 +11,7 @@ def add(date, number):
     year, month, day = date[:4], date[4:6], date[6:]
     storage.setdefault(f'{year}.{month}.{day}', 0)
     storage[f'{year}.{month}.{day}'] += number
-    return f'{year}.{month}.{day} потрачено {number} рублей'
+    return f'{year}.{month}.{day} потрачено {number} рублей', response_code
 
 
 @app.route('/calculate/<int:year>')
