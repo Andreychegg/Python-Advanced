@@ -1,0 +1,39 @@
+from task3 import BlockErrors
+import unittest
+
+
+err_types = {ZeroDivisionError, TypeError}
+
+
+class TestBlockErrors(unittest.TestCase):
+    def test_error_ignored(self):
+        try:
+            err_types = {ZeroDivisionError, TypeError}
+            with BlockErrors(err_types):
+                a = 1 / 0
+        except Exception as e:
+            self.fail(e)
+
+    def test_error_goes_up(self):
+        err_types = {ZeroDivisionError}
+        with self.assertRaises(TypeError):
+            with BlockErrors(err_types):
+                a = 1 / '0'
+
+    def test_error_goes_up_and_ignore_in_outer(self):
+        try:
+            outer_err_types = {TypeError}
+            with BlockErrors(outer_err_types):
+                inner_err_types = {ZeroDivisionError}
+                with BlockErrors(inner_err_types):
+                    a = 1 / '0'
+        except Exception as e:
+            self.fail(e)
+
+    def test_child_errors_ignore(self):
+        try:
+            err_types = {Exception}
+            with BlockErrors(err_types):
+                a = 1 / '0'
+        except Exception as e:
+            self.fail(e)
