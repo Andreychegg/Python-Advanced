@@ -2,7 +2,7 @@ import logging.config
 import sys
 
 import utils
-from logging_config import LOGGING_CONFIG
+from logging_config import dict_config
 
 
 def get_number():
@@ -49,6 +49,6 @@ def main():
 
 
 if __name__ == '__main__':
-    logging.config.dictConfig(LOGGING_CONFIG)
+    logging.config.dictConfig(dict_config)
     logger = logging.getLogger(__name__)
     main()
