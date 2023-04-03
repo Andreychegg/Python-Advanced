@@ -59,6 +59,6 @@ dict_config = {
         'flask': {
                 'level': 'DEBUG',
                 'handlers': ['flask_server']
-            }
+        }
     }
 }
