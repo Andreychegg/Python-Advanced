@@ -1,8 +1,6 @@
-import logging.config
+import logging
 import sys
-
 import utils
-from logging_config import dict_config
 
 
 def get_number():
@@ -12,7 +10,7 @@ def get_number():
             num2 = float(input("Введите второе число: "))
             return num1, num2
         except ValueError:
-            logging.warning("Неверный ввод")
+            logger.warning("Неверный ввод")
 
 
 def get_operation():
@@ -20,11 +18,11 @@ def get_operation():
         operation = input("+ - сложение \n- - вычитание \n* - умножение \n/ - деление \n0 - выход \nВыберите действие: ")
         if operation in ["+", "-", "*", "/", "0"]:
             return operation
-        logging.warning("Неверная операция: %s", operation)
+        logger.warning("Неверная операция: %s", operation)
 
 
 def main():
-    logging.info("Калькулятор запущен")
+    logger.info("Калькулятор запущен")
     while True:
         action = get_operation()
 
@@ -45,10 +43,10 @@ def main():
         elif action == "/":
             result = utils.divide(x, y)
 
-        logging.info(f"Результат: {result}")
+        logger.info(f"Результат: {result}")
 
 
 if __name__ == '__main__':
-    logging.config.dictConfig(dict_config)
+    logging.basicConfig(level=logging.INFO, format='%(message)s')
     logger = logging.getLogger(__name__)
     main()
