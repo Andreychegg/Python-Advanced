@@ -1,21 +1,24 @@
 import logging
 
+logging.basicConfig(level=logging.INFO, format='%(message)s')
+logger = logging.getLogger(__name__)
+
 
 def add(x, y):
     result = x + y
-    logging.info(f"{x} + {y} = {result}")
+    logger.info(f"{x} + {y} = {result}")
     return result
 
 
 def subtract(x, y):
     result = x - y
-    logging.info(f"{x} - {y} = {result}")
+    logger.info(f"{x} - {y} = {result}")
     return result
 
 
 def multiply(x, y):
     result = x * y
-    logging.info(f"{x} * {y} = {result}")
+    logger.info(f"{x} * {y} = {result}")
     return result
 
 
@@ -23,7 +26,7 @@ def divide(x, y):
     try:
         result = x / y
     except ZeroDivisionError:
-        logging.error("На ноль делить нельзя")
+        logger.error("На ноль делить нельзя")
         return None
-    logging.info(f"{x} / {y} = {result}")
+    logger.info(f"{x} / {y} = {result}")
     return result
