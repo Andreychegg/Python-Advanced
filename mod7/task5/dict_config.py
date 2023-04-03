@@ -27,8 +27,8 @@ dict_config = {
             'formatter': 'standard',
             'filename': 'utils.log',
             'when': 'H',
-            'interval': 1,
-            'backupCount': 10
+            'interval': 10,
+            'backupCount': 5
         }
     },
     'loggers': {
