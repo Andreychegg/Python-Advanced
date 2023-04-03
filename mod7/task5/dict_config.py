@@ -21,7 +21,7 @@ dict_config = {
             '()': LogsLevels,
             'formatter': 'standard'
         },
-        'utils': {
+        'utils_file': {
             'class': 'logging.handlers.TimedRotatingFileHandler',
             'level': 'INFO',
             'formatter': 'standard',
@@ -38,7 +38,7 @@ dict_config = {
             'propagate': True
         },
         'utils': {
-            'handlers': ['utils'],
+            'handlers': ['utils_file'],
             'level': 'INFO',
             'propagate': False
         }
