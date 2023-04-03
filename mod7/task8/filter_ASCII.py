@@ -4,4 +4,4 @@ import string
 
 class FilterASCII(logging.Filter):
     def filter(self, record: logging.LogRecord) -> int:
-        return not any(symb not in string.printable for symb in record.msg)
+        return not any(symbol not in string.printable for symbol in record.msg)
