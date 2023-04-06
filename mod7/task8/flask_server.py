@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 
 logging.config.dictConfig(dict_config)
-logger = logging.getLogger('httpLogger')
+logger = logging.getLogger('flask')
 
 
 @app.route('/logs_post', methods=['POST'])
