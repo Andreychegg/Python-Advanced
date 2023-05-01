@@ -23,11 +23,16 @@ FROM table_friendship_employees
 def update_work_schedule(cursor: sqlite3.Cursor) -> None:
     cursor.execute(delete_table)
     employees = cursor.execute(get_employees).fetchall()
-    worker_days = {employee[0]: 0 for employee in employees}
+    worker_days = dict()
+    for employee in employees:
+        worker_days[employee[0]] = 0
     current_day = datetime.strptime('2023-01-01', '%Y-%m-%d')
-    work_days = {current_day + timedelta(days=i): 0 for i in range(366)}
+    workdays = dict()
+    for i in range(366):
+        day = current_day + timedelta(days=i)
+        workdays[day] = 0
 
-    for day, employee in work_days.items():
+    for day, employee in workdays.items():
         weekday = weekdays[day.weekday()]
         for id_employee, sport_employee in employees:
             if weekday == weekdays[sports.index(sport_employee)]:
@@ -36,8 +41,8 @@ def update_work_schedule(cursor: sqlite3.Cursor) -> None:
             if worker_days[id_employee] != 11:
                 cursor.execute(add_employee, (id_employee, day))
                 worker_days[id_employee] += 1
-                work_days[day] += 1
-                if work_days[day] == 10:
+                workdays[day] += 1
+                if workdays[day] == 10:
                     break
 
 
